@@ -1,0 +1,228 @@
+/* NovaFrame Branded Roundcube Theme */
+
+:root {
+  --nf-primary: #111827;
+  --nf-primary-light: #1f2937;
+  --nf-accent: #3b82f6;
+  --nf-accent-hover: #2563eb;
+  --nf-bg: #f9fafb;
+  --nf-sidebar-bg: #111827;
+  --nf-sidebar-text: #e5e7eb;
+  --nf-border: #e5e7eb;
+}
+
+/* Login page */
+#login-form {
+  max-width: 400px;
+}
+
+#login-form .box-inner {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
+  border: 1px solid var(--nf-border) !important;
+}
+
+/* Login button */
+#rcmloginsubmit,
+#login-form .button.mainaction {
+  background: var(--nf-primary) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  padding: 10px 20px !important;
+  transition: background 0.2s ease !important;
+}
+
+#rcmloginsubmit:hover,
+#login-form .button.mainaction:hover {
+  background: var(--nf-primary-light) !important;
+}
+
+/* Top toolbar / header */
+#layout > .content > .header,
+.header,
+#layout-sidebar .header,
+#layout-list .header,
+#layout-content .header {
+  background: var(--nf-primary) !important;
+  color: white !important;
+  border-bottom: none !important;
+}
+
+.header a,
+.header .button,
+.header span,
+.header .header-title {
+  color: white !important;
+}
+
+.header a:hover,
+.header .button:hover {
+  color: var(--nf-accent) !important;
+}
+
+/* Toolbar buttons */
+.toolbar a.button::before {
+  color: white !important;
+}
+
+.toolbar a.button:hover::before,
+.toolbar a.button.active::before {
+  color: var(--nf-accent) !important;
+}
+
+/* Task menu / sidebar nav */
+#layout-menu {
+  background: var(--nf-sidebar-bg) !important;
+}
+
+#layout-menu .listitem a {
+  color: var(--nf-sidebar-text) !important;
+}
+
+#layout-menu .listitem a::before {
+  color: #9ca3af !important;
+}
+
+#layout-menu .listitem.selected a,
+#layout-menu .listitem a:hover {
+  background: var(--nf-primary-light) !important;
+  color: white !important;
+}
+
+#layout-menu .listitem.selected a::before,
+#layout-menu .listitem a:hover::before {
+  color: var(--nf-accent) !important;
+}
+
+/* Main action buttons (compose, etc) */
+.toolbar a.button.compose::before,
+a.button.create::before {
+  color: var(--nf-accent) !important;
+}
+
+/* Message list */
+#messagelist tr.selected td {
+  background: #eff6ff !important;
+}
+
+#messagelist tr:hover td {
+  background: #f8fafc !important;
+}
+
+/* Links */
+a {
+  color: var(--nf-accent);
+}
+
+a:hover {
+  color: var(--nf-accent-hover);
+}
+
+/* Primary action buttons throughout the app */
+.mainaction,
+.btn-primary,
+input[type="button"].mainaction,
+input[type="submit"].mainaction {
+  background: var(--nf-primary) !important;
+  border-color: var(--nf-primary) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.mainaction:hover,
+.btn-primary:hover {
+  background: var(--nf-primary-light) !important;
+  border-color: var(--nf-primary-light) !important;
+}
+
+/* Rounded corners for panels */
+.scroller .listing,
+#messagecontframe,
+.box-inner,
+.formcontent {
+  border-radius: 8px;
+}
+
+/* Login page branding */
+#logo {
+  display: block !important;
+  text-align: center;
+  margin: 0 auto 20px;
+}
+
+/* Custom branding text injected via footer */
+.login-footer,
+#login-form::before {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+}
+
+/* Mailbox quota bar */
+.quotabar .bar {
+  background: var(--nf-accent) !important;
+  border-radius: 4px !important;
+}
+
+/* Folder list */
+#mailboxlist li.selected > a {
+  background: #eff6ff !important;
+  color: var(--nf-accent) !important;
+  font-weight: 600;
+}
+
+/* Search bar */
+.searchbar input {
+  border-radius: 8px !important;
+  border: 1px solid var(--nf-border) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Dark mode overrides */
+html.dark-mode {
+  --nf-bg: #0f172a;
+  --nf-border: #1e293b;
+}
+
+html.dark-mode #layout-menu {
+  background: #0f172a !important;
+}
+
+html.dark-mode .header {
+  background: #0f172a !important;
+}
+
+html.dark-mode #messagelist tr.selected td {
+  background: #1e293b !important;
+}
+
+html.dark-mode #messagelist tr:hover td {
+  background: #1a2332 !important;
+}
+
+html.dark-mode .mainaction,
+html.dark-mode .btn-primary {
+  background: var(--nf-accent) !important;
+  border-color: var(--nf-accent) !important;
+}
