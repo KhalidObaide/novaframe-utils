@@ -23,15 +23,19 @@ class novaframe_theme extends rcube_plugin
             $content = str_replace("</head>", $css . "\n</head>", $content);
         }
 
-        // 3. Replace page title
+        // 3. Replace page title (use # as delimiter to avoid / conflicts)
         $content = preg_replace(
-            chr(47) . "<title>[^<]*<" . chr(47) . "title>" . chr(47),
+            "#<title>[^<]*</title>#",
             "<title>NovaFrame Mail</title>",
             $content
         );
 
         // 4. Add body class for targeting
-        $content = str_replace("<body", '<body class="novaframe-branded"', $content);
+        if (strpos($content, '<body class="') !== false) {
+            $content = str_replace('<body class="', '<body class="novaframe-branded ', $content);
+        } else {
+            $content = str_replace("<body", '<body class="novaframe-branded"', $content);
+        }
 
         // 5. Inject tagline on login page
         if (strpos($content, "id=" . chr(34) . "login-form" . chr(34)) !== false) {
