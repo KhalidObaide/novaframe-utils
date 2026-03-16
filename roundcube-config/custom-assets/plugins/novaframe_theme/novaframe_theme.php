@@ -9,6 +9,7 @@ class novaframe_theme extends rcube_plugin
     public function inject_assets($args)
     {
         $content = $args["content"];
+        $is_login = strpos($content, 'id="login-form"') !== false;
 
         // 1. Inject Google Fonts (Inter)
         $fonts = '<link rel="preconnect" href="https://fonts.googleapis.com">'
@@ -23,7 +24,7 @@ class novaframe_theme extends rcube_plugin
             $content = str_replace("</head>", $css . "\n</head>", $content);
         }
 
-        // 3. Replace page title (use # as delimiter to avoid / conflicts)
+        // 3. Replace page title
         $content = preg_replace(
             "#<title>[^<]*</title>#",
             "<title>NovaFrame Mail</title>",
@@ -37,10 +38,15 @@ class novaframe_theme extends rcube_plugin
             $content = str_replace("<body", '<body class="novaframe-branded"', $content);
         }
 
-        // 5. Inject tagline on login page
-        if (strpos($content, "id=" . chr(34) . "login-form" . chr(34)) !== false) {
-            $tagline = '<div class="nf-login-tagline">Secure email powered by <strong>NovaFrame</strong></div>';
+        // 5. On login page: inject tagline and use white logo
+        if ($is_login) {
             $content = str_replace("</body>", '<script>document.addEventListener("DOMContentLoaded",function(){var f=document.getElementById("login-form");if(f){var d=document.createElement("div");d.className="nf-login-tagline";d.innerHTML="Secure email powered by <strong>NovaFrame</strong>";f.parentNode.insertBefore(d,f.nextSibling);}});</script>' . "\n</body>", $content);
+
+            // Use white logo on login (dark background)
+            $logo_file = "/var/www/html/custom-assets/logo-white.svg";
+        } else {
+            // Use dark logo elsewhere (light background)
+            $logo_file = "/var/www/html/custom-assets/logo.svg";
         }
 
         // 6. Inject JS for branding removal and UI enhancements
@@ -57,12 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
         composeBtn.setAttribute("data-nf-enhanced", "true");
     }
 
-    // Enhance folder list icons
-    var specialFolders = {
-        "inbox": "📥", "sent": "📤", "drafts": "📝",
-        "trash": "🗑️", "junk": "⚠️", "archive": "📦"
-    };
-
     // Add unread badge styling
     var unreadSpans = document.querySelectorAll(".unreadcount");
     for (var j = 0; j < unreadSpans.length; j++) {
@@ -74,11 +74,10 @@ JSEOF;
         $content = str_replace("</body>", $js . "\n</body>", $content);
 
         // 7. Replace logo src with base64 data URI
-        $logo_file = "/var/www/html/custom-assets/logo.svg";
         if (file_exists($logo_file)) {
             $logo_data = "data:image/svg+xml;base64," . base64_encode(file_get_contents($logo_file));
-            $pattern = chr(47) . "src=" . chr(34) . "[^" . chr(34) . "]*logo" . chr(92) . ".svg[^" . chr(34) . "]*" . chr(34) . chr(47);
-            $replacement = "src=" . chr(34) . $logo_data . chr(34);
+            $pattern = '#src="[^"]*logo[^"]*\.svg[^"]*"#';
+            $replacement = 'src="' . $logo_data . '"';
             $content = preg_replace($pattern, $replacement, $content);
         }
 
