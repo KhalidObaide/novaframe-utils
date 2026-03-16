@@ -20,8 +20,7 @@ $config["smtp_conn_options"] = [
 // Branding
 $config["product_name"] = "NovaFrame Mail";
 $config["support_url"] = "https://www.novaframe.cloud";
-// Use default Roundcube logo (custom logo path blocked by .htaccess rewrite rules)
-// $config["skin_logo"] = [];
+// No custom logo — use default Roundcube logo
 
 // Enable custom theme plugin
 $config["plugins"] = array_filter(array_unique(array_merge(

@@ -10,17 +10,27 @@ class novaframe_theme extends rcube_plugin
     {
         $content = $args["content"];
 
-        // Replace page title: "Roundcube Webmail" -> "NovaFrame Mail"
+        // Replace page title
         $content = preg_replace(
             "#<title>[^<]*</title>#",
             "<title>NovaFrame Mail</title>",
             $content
         );
 
-        // Replace product name text in login page
+        // Replace product name text
         $content = str_replace("Roundcube Webmail", "NovaFrame Mail", $content);
-        $content = str_replace("Welcome to Roundcube Webmail", "Welcome to NovaFrame Mail", $content);
-        $content = str_replace("Welcome to NovaFrame Mail", "Welcome to NovaFrame Mail", $content);
+
+        // Replace favicon with NovaFrame favicon (base64 to bypass .htaccess)
+        $favicon_file = "/var/www/html/custom-assets/favicon.ico";
+        if (file_exists($favicon_file)) {
+            $favicon_data = "data:image/x-icon;base64," . base64_encode(file_get_contents($favicon_file));
+            // Replace existing favicon link
+            $content = preg_replace(
+                '#<link[^>]*rel="shortcut icon"[^>]*>#',
+                '<link rel="shortcut icon" href="' . $favicon_data . '">',
+                $content
+            );
+        }
 
         $args["content"] = $content;
         return $args;
